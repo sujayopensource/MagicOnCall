@@ -1,0 +1,30 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# App
+*.log
+/logs/
+
+# Env
+.env
+*.env.local
+
+# Node
+modules/ui-react/node_modules/
+modules/ui-react/dist/
