@@ -15,6 +15,9 @@ magiconcall:
     api-keys: test-api-key
   outbox:
     poll-interval-ms: 60000
+  llm:
+    enabled: false
+    token-budget: 4096
 
 logging:
   level:

@@ -62,6 +62,9 @@ magiconcall:
     api-keys: moc-dev-key-001,moc-dev-key-002
   outbox:
     poll-interval-ms: 1000
+  llm:
+    enabled: false
+    token-budget: 4096
 
 logging:
   level:

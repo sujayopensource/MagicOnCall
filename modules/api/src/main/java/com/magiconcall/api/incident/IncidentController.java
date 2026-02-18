@@ -1,6 +1,7 @@
 package com.magiconcall.api.incident;
 
 import com.magiconcall.application.incident.*;
+import com.magiconcall.application.triage.TriageService;
 import com.magiconcall.domain.incident.IncidentStatus;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -15,9 +16,12 @@ import java.util.UUID;
 public class IncidentController {
 
     private final IncidentService incidentService;
+    private final TriageService triageService;
 
-    public IncidentController(IncidentService incidentService) {
+    public IncidentController(IncidentService incidentService,
+                              TriageService triageService) {
         this.incidentService = incidentService;
+        this.triageService = triageService;
     }
 
     @PostMapping
@@ -45,6 +49,13 @@ public class IncidentController {
         return ResponseEntity.ok(timeline);
     }
 
+    @GetMapping("/{id}/hypotheses")
+    public ResponseEntity<List<HypothesisResponse>> getHypotheses(@PathVariable UUID id) {
+        var hypotheses = incidentService.getHypotheses(id)
+            .stream().map(HypothesisResponse::from).toList();
+        return ResponseEntity.ok(hypotheses);
+    }
+
     @PostMapping("/{id}/hypotheses")
     public ResponseEntity<HypothesisResponse> addHypothesis(
             @PathVariable UUID id,
@@ -55,6 +66,12 @@ public class IncidentController {
         );
         var result = incidentService.addHypothesis(id, command);
         return ResponseEntity.status(HttpStatus.CREATED).body(HypothesisResponse.from(result));
+    }
+
+    @PostMapping("/{id}/triage")
+    public ResponseEntity<TriageResponse> triage(@PathVariable UUID id) {
+        var result = triageService.triage(id);
+        return ResponseEntity.ok(TriageResponse.from(result));
     }
 
     @PostMapping("/{id}/evidence")

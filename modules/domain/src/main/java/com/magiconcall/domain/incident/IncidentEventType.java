@@ -8,5 +8,8 @@ public enum IncidentEventType {
     ACTION_TAKEN,
     NOTE_ADDED,
     ALERT_CORRELATED,
-    TOOL_EXECUTED
+    TOOL_EXECUTED,
+    TRIAGE_COMPLETED,
+    GRAPH_NODE_ADDED,
+    GRAPH_SEEDED
 }

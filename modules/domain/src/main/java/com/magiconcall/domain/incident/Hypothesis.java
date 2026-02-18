@@ -28,6 +28,21 @@ public class Hypothesis extends BaseEntity {
     @Column(nullable = false)
     private String source;
 
+    @Column(columnDefinition = "text")
+    private String evidenceFor;
+
+    @Column(columnDefinition = "text")
+    private String evidenceAgainst;
+
+    @Column(columnDefinition = "text")
+    private String nextBestTest;
+
+    @Column(columnDefinition = "text")
+    private String stopCondition;
+
+    @Column(length = 64)
+    private String evidenceHash;
+
     protected Hypothesis() {}
 
     public Hypothesis(UUID incidentId, String title, String description,
@@ -51,4 +66,19 @@ public class Hypothesis extends BaseEntity {
     public double getConfidence() { return confidence; }
     public void setConfidence(double confidence) { this.confidence = confidence; }
     public String getSource() { return source; }
+
+    public String getEvidenceFor() { return evidenceFor; }
+    public void setEvidenceFor(String evidenceFor) { this.evidenceFor = evidenceFor; }
+
+    public String getEvidenceAgainst() { return evidenceAgainst; }
+    public void setEvidenceAgainst(String evidenceAgainst) { this.evidenceAgainst = evidenceAgainst; }
+
+    public String getNextBestTest() { return nextBestTest; }
+    public void setNextBestTest(String nextBestTest) { this.nextBestTest = nextBestTest; }
+
+    public String getStopCondition() { return stopCondition; }
+    public void setStopCondition(String stopCondition) { this.stopCondition = stopCondition; }
+
+    public String getEvidenceHash() { return evidenceHash; }
+    public void setEvidenceHash(String evidenceHash) { this.evidenceHash = evidenceHash; }
 }

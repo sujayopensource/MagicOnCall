@@ -74,6 +74,24 @@ public class IncidentEvent extends BaseEntity {
             "{\"tool\":\"" + toolName + "\",\"status\":\"" + status + "\"}");
     }
 
+    public static IncidentEvent triageCompleted(UUID incidentId, int hypothesisCount) {
+        return new IncidentEvent(incidentId, IncidentEventType.TRIAGE_COMPLETED,
+            "AI triage completed: " + hypothesisCount + " hypotheses generated",
+            "{\"hypothesisCount\":" + hypothesisCount + "}");
+    }
+
+    public static IncidentEvent graphNodeAdded(UUID incidentId, String label, String nodeType) {
+        return new IncidentEvent(incidentId, IncidentEventType.GRAPH_NODE_ADDED,
+            "Graph node added: " + label + " (" + nodeType + ")",
+            "{\"label\":\"" + label + "\",\"nodeType\":\"" + nodeType + "\"}");
+    }
+
+    public static IncidentEvent graphSeeded(UUID incidentId, int nodeCount) {
+        return new IncidentEvent(incidentId, IncidentEventType.GRAPH_SEEDED,
+            "Correlation graph seeded with " + nodeCount + " alert nodes",
+            "{\"nodeCount\":" + nodeCount + "}");
+    }
+
     public UUID getIncidentId() { return incidentId; }
     public IncidentEventType getEventType() { return eventType; }
     public String getDescription() { return description; }

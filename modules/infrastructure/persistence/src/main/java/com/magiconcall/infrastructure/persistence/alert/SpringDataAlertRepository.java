@@ -15,4 +15,6 @@ interface SpringDataAlertRepository extends JpaRepository<Alert, UUID> {
     boolean existsByExternalId(String externalId);
 
     List<Alert> findByStatusOrderByCreatedAtDesc(AlertStatus status);
+
+    List<Alert> findByIncidentId(UUID incidentId);
 }

@@ -129,6 +129,15 @@ public class IncidentService {
             .stream().map(TimelineResult::from).toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<HypothesisResult> getHypotheses(UUID incidentId) {
+        if (incidentRepository.findById(incidentId).isEmpty()) {
+            throw new IncidentNotFoundException(incidentId);
+        }
+        return hypothesisRepository.findByIncidentIdOrderByCreatedAtDesc(incidentId)
+            .stream().map(HypothesisResult::from).toList();
+    }
+
     @Transactional
     public HypothesisResult addHypothesis(UUID incidentId, AddHypothesisCommand command) {
         var incident = incidentRepository.findById(incidentId)
@@ -139,6 +148,10 @@ public class IncidentService {
                 incidentId, command.title(), command.description(),
                 command.confidence(), command.source()
             );
+            hypothesis.setEvidenceFor(command.evidenceFor());
+            hypothesis.setEvidenceAgainst(command.evidenceAgainst());
+            hypothesis.setNextBestTest(command.nextBestTest());
+            hypothesis.setStopCondition(command.stopCondition());
             hypothesis.setTenantId(incident.getTenantId());
             hypothesis = hypothesisRepository.save(hypothesis);
 

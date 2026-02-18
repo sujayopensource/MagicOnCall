@@ -45,4 +45,9 @@ public class JpaAlertRepository implements AlertRepository {
     public List<Alert> findByStatusOrderByCreatedAtDesc(AlertStatus status) {
         return delegate.findByStatusOrderByCreatedAtDesc(status);
     }
+
+    @Override
+    public List<Alert> findByIncidentId(UUID incidentId) {
+        return delegate.findByIncidentId(incidentId);
+    }
 }

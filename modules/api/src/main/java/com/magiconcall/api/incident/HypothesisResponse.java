@@ -13,12 +13,19 @@ public record HypothesisResponse(
     String status,
     double confidence,
     String source,
+    String evidenceFor,
+    String evidenceAgainst,
+    String nextBestTest,
+    String stopCondition,
     Instant createdAt
 ) {
     public static HypothesisResponse from(HypothesisResult r) {
         return new HypothesisResponse(
             r.id(), r.incidentId(), r.title(), r.description(),
-            r.status(), r.confidence(), r.source(), r.createdAt()
+            r.status(), r.confidence(), r.source(),
+            r.evidenceFor(), r.evidenceAgainst(),
+            r.nextBestTest(), r.stopCondition(),
+            r.createdAt()
         );
     }
 }

@@ -1,8 +1,10 @@
 package com.magiconcall.api;
 
 import com.magiconcall.application.alert.AlertService;
+import com.magiconcall.application.graph.CorrelationGraphService;
 import com.magiconcall.application.incident.IncidentService;
 import com.magiconcall.application.tool.ToolRegistry;
+import com.magiconcall.application.triage.TokenBudgetExceededException;
 import com.magiconcall.domain.incident.IncidentStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleToolNotFound(ToolRegistry.ToolNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body(errorBody("TOOL_NOT_FOUND", ex.getMessage()));
+    }
+
+    @ExceptionHandler(CorrelationGraphService.NodeNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNodeNotFound(CorrelationGraphService.NodeNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(errorBody("NODE_NOT_FOUND", ex.getMessage()));
+    }
+
+    @ExceptionHandler(TokenBudgetExceededException.class)
+    public ResponseEntity<Map<String, Object>> handleTokenBudgetExceeded(TokenBudgetExceededException ex) {
+        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
+            .body(errorBody("TOKEN_BUDGET_EXCEEDED", ex.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
