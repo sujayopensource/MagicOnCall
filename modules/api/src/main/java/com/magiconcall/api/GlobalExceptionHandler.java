@@ -1,10 +1,12 @@
 package com.magiconcall.api;
 
+import com.magiconcall.application.action.ActionService;
 import com.magiconcall.application.alert.AlertService;
 import com.magiconcall.application.graph.CorrelationGraphService;
 import com.magiconcall.application.incident.IncidentService;
 import com.magiconcall.application.tool.ToolRegistry;
 import com.magiconcall.application.triage.TokenBudgetExceededException;
+import com.magiconcall.domain.incident.Action;
 import com.magiconcall.domain.incident.IncidentStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +58,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleNodeNotFound(CorrelationGraphService.NodeNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body(errorBody("NODE_NOT_FOUND", ex.getMessage()));
+    }
+
+    @ExceptionHandler(ActionService.ActionNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleActionNotFound(ActionService.ActionNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(errorBody("ACTION_NOT_FOUND", ex.getMessage()));
+    }
+
+    @ExceptionHandler(Action.InvalidActionTransitionException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidActionTransition(Action.InvalidActionTransitionException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+            .body(errorBody("INVALID_ACTION_TRANSITION", ex.getMessage()));
     }
 
     @ExceptionHandler(TokenBudgetExceededException.class)

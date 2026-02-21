@@ -92,6 +92,36 @@ public class IncidentEvent extends BaseEntity {
             "{\"nodeCount\":" + nodeCount + "}");
     }
 
+    public static IncidentEvent actionProposed(UUID incidentId, String title, String toolName, String riskLevel) {
+        return new IncidentEvent(incidentId, IncidentEventType.ACTION_PROPOSED,
+            "Action proposed: " + title + " (tool=" + toolName + ", risk=" + riskLevel + ")",
+            "{\"toolName\":\"" + toolName + "\",\"riskLevel\":\"" + riskLevel + "\"}");
+    }
+
+    public static IncidentEvent actionApproved(UUID incidentId, String title, String approvedBy) {
+        return new IncidentEvent(incidentId, IncidentEventType.ACTION_APPROVED,
+            "Action approved: " + title + " by " + approvedBy,
+            "{\"approvedBy\":\"" + approvedBy + "\"}");
+    }
+
+    public static IncidentEvent actionRejected(UUID incidentId, String title, String rejectedBy, String reason) {
+        return new IncidentEvent(incidentId, IncidentEventType.ACTION_REJECTED,
+            "Action rejected: " + title + " by " + rejectedBy + " — " + reason,
+            "{\"rejectedBy\":\"" + rejectedBy + "\",\"reason\":\"" + (reason != null ? reason : "") + "\"}");
+    }
+
+    public static IncidentEvent actionExecuted(UUID incidentId, String title, String toolName) {
+        return new IncidentEvent(incidentId, IncidentEventType.ACTION_EXECUTED,
+            "Action executed: " + title + " (tool=" + toolName + ")",
+            "{\"toolName\":\"" + toolName + "\"}");
+    }
+
+    public static IncidentEvent actionFailed(UUID incidentId, String title, String error) {
+        return new IncidentEvent(incidentId, IncidentEventType.ACTION_FAILED,
+            "Action failed: " + title + " — " + error,
+            "{\"error\":\"" + (error != null ? error.replace("\"", "'") : "") + "\"}");
+    }
+
     public UUID getIncidentId() { return incidentId; }
     public IncidentEventType getEventType() { return eventType; }
     public String getDescription() { return description; }

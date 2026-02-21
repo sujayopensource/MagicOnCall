@@ -18,6 +18,10 @@ magiconcall:
   llm:
     enabled: false
     token-budget: 4096
+  action-policy:
+    tool-allowlist: logs,metrics,deploy,topology
+    max-scaling-limit: 10
+    rollback-requires-approval: true
 
 logging:
   level:

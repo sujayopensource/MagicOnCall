@@ -25,7 +25,7 @@ import java.util.UUID;
 import java.util.concurrent.*;
 
 @Service
-public class ToolExecutionService {
+public class ToolExecutionService implements ToolExecutor {
 
     private static final Logger log = LoggerFactory.getLogger(ToolExecutionService.class);
 
